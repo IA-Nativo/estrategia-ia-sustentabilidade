@@ -5,7 +5,8 @@ IA + Sustentabilidade para liderança empresarial.
 
 🔗 [Ver Apresentação](https://ia-nativo.github.io/estrategia-ia-sustentabilidade/)
 
-## Highlights
-- 🚀 Zero concorrência na interseção
-- 💎 Potencial de R$ 24M em 12 meses
-- 🌱 Criação de categoria única
+## 📊 Impacto Esperado
+- 🎯 Zero concorrência na interseção IA + ESG
+- 💰 Mercado potencial: R$ 24M+ (12 meses)
+- 🧠 Framework exclusivo de Liderança Cognitiva
+- 🌱 Primeira metodologia IA + Sustentabilidade do Brasil
