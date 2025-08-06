@@ -10,3 +10,7 @@ IA + Sustentabilidade para liderança empresarial.
 - 💰 Mercado potencial: R$ 24M+ (12 meses)
 - 🧠 Framework exclusivo de Liderança Cognitiva
 - 🌱 Primeira metodologia IA + Sustentabilidade do Brasil
+## 📞 Contato Estratégico
+**Othon** | Criador da Metodologia
+- LinkedIn: [seu-linkedin]
+- Email: [seu-email]
