@@ -1,0 +1,1867 @@
+    :root {
+        --primary: #1E3A8A;
+        --secondary: #10B981;
+        --accent: #F59E0B;
+        --dark: #111827;
+        --light: #F9FAFB;
+        --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: var(--dark);
+        color: var(--light);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .presentation-container {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .slide {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .slide.active {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .slide.prev {
+        transform: translateX(-100%);
+    }
+
+    /* Navigation */
+    .nav-controls {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        z-index: 100;
+    }
+
+    .nav-btn {
+        padding: 12px 24px;
+        background: var(--gradient);
+        border: none;
+        border-radius: 50px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    .nav-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: rgba(255,255,255,0.1);
+        z-index: 100;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: var(--gradient);
+        transition: width 0.6s ease;
+    }
+
+    /* Slide Indicators */
+    .slide-indicators {
+        position: fixed;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 100;
+    }
+
+    .indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.3);
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .indicator.active {
+        background: var(--accent);
+        transform: scale(1.5);
+    }
+
+    /* Typography */
+    h1 {
+        font-size: clamp(2rem, 5vw, 4rem);
+        margin-bottom: 1rem;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        animation: slideInTop 0.8s ease;
+    }
+
+    h2 {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        margin-bottom: 1rem;
+        color: var(--secondary);
+        text-align: center;
+    }
+
+    .subtitle {
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        color: rgba(255,255,255,0.8);
+        text-align: center;
+        margin-bottom: 2rem;
+        max-width: 800px;
+    }
+
+    /* Cards */
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        width: 100%;
+        max-width: 1200px;
+        margin-top: 2rem;
+    }
+
+    .card {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 20px;
+        padding: 2rem;
+        transition: all 0.3s;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--gradient);
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: -1;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        border-color: var(--accent);
+    }
+
+    .card:hover::before {
+        opacity: 0.1;
+    }
+
+    .card-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--accent);
+    }
+
+    .card-description {
+        color: rgba(255,255,255,0.7);
+        line-height: 1.6;
+    }
+
+    /* Stats */
+    .stats-container {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        max-width: 1000px;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    .stat-box {
+        text-align: center;
+        padding: 1.5rem;
+        background: rgba(255,255,255,0.05);
+        border-radius: 15px;
+        border: 1px solid rgba(255,255,255,0.1);
+        min-width: 200px;
+        transition: all 0.3s;
+    }
+
+    .stat-box:hover {
+        transform: scale(1.05);
+        background: rgba(255,255,255,0.08);
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: bold;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        color: rgba(255,255,255,0.7);
+        font-size: 1rem;
+    }
+
+    /* Timeline */
+    .timeline {
+        width: 100%;
+        max-width: 1000px;
+        margin-top: 2rem;
+    }
+
+    .timeline-item {
+        display: flex;
+        margin-bottom: 2rem;
+        position: relative;
+        padding-left: 60px;
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: 25px;
+        top: 40px;
+        bottom: -20px;
+        width: 2px;
+        background: rgba(255,255,255,0.2);
+    }
+
+    .timeline-item:last-child::before {
+        display: none;
+    }
+
+    .timeline-marker {
+        position: absolute;
+        left: 15px;
+        top: 15px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+        font-size: 0.8rem;
+    }
+
+    .timeline-content {
+        background: rgba(255,255,255,0.05);
+        border-radius: 15px;
+        padding: 1.5rem;
+        flex: 1;
+        border: 1px solid rgba(255,255,255,0.1);
+        transition: all 0.3s;
+    }
+
+    .timeline-content:hover {
+        background: rgba(255,255,255,0.08);
+        transform: translateX(10px);
+    }
+
+    .timeline-title {
+        color: var(--accent);
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Interactive Elements */
+    .interactive-box {
+        background: rgba(255,255,255,0.05);
+        border: 2px dashed rgba(255,255,255,0.3);
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 2rem 0;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .interactive-box:hover {
+        border-color: var(--accent);
+        background: rgba(255,255,255,0.08);
+    }
+
+    .pulse {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes slideInTop {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .fade-in {
+        animation: fadeIn 1s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .cards-container {
+            grid-template-columns: 1fr;
+        }
+        
+        .stats-container {
+            flex-direction: column;
+        }
+        
+        .nav-controls {
+            bottom: 20px;
+        }
+        
+        .slide-indicators {
+            right: 15px;
+        }
+    }
+
+    /* Special Elements */
+    .highlight-box {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(30, 58, 138, 0.1) 100%);
+        border: 2px solid var(--secondary);
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 2rem 0;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .cta-button {
+        padding: 1rem 3rem;
+        background: var(--gradient);
+        border: none;
+        border-radius: 50px;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 2rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 30px rgba(0,0,0,0.4);
+    }
+
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin: 2rem 0;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .feature-item {
+        background: rgba(255,255,255,0.05);
+        padding: 1rem;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .feature-icon {
+        font-size: 1.5rem;
+        color: var(--accent);
+    }
+
+    .metric-display {
+        font-size: 4rem;
+        font-weight: bold;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 2rem 0;
+    }
+</style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    <!-- Slide Indicators -->
+    <div class="slide-indicators" id="indicators"></div>
+
+    <!-- Slide 1: Abertura -->
+    <div class="slide active" data-slide="1">
+        <h1 class="fade-in">🚀 Revolução Cognitiva + Transformação Sustentável</h1>
+        <p class="subtitle fade-in">A Primeira Metodologia do Mundo que Integra IA + Sustentabilidade para Liderança Empresarial</p>
+        <div class="highlight-box fade-in">
+            <h2>Oportunidade Única de Mercado</h2>
+            <p style="color: rgba(255,255,255,0.8); line-height: 1.8; text-align: center;">
+                Criando a categoria "Liderança em IA Sustentável" no Brasil
+            </p>
+        </div>
+        <div class="stats-container">
+            <div class="stat-box pulse">
+                <span class="stat-number">750K</span>
+                <span class="stat-label">Líderes Brasileiros</span>
+            </div>
+            <div class="stat-box pulse" style="animation-delay: 0.2s;">
+                <span class="stat-number">R$ 100B</span>
+                <span class="stat-label">Mercado Potencial</span>
+            </div>
+            <div class="stat-box pulse" style="animation-delay: 0.4s;">
+                <span class="stat-number">0%</span>
+                <span class="stat-label">Concorrência Direta</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: A Oportunidade -->
+    <div class="slide" data-slide="2">
+        <h1>📊 A Convergência Perfeita</h1>
+        <p class="subtitle">Dois Mercados Trilionários se Encontram</p>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <div class="card-title">Inteligência Artificial</div>
+                <div class="card-description">
+                    78% dos projetos de IA falham por falta de liderança estratégica
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🌱</div>
+                <div class="card-title">Sustentabilidade ESG</div>
+                <div class="card-description">
+                    87% dos investidores priorizam empresas com práticas sustentáveis
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💎</div>
+                <div class="card-title">Nossa Interseção</div>
+                <div class="card-description">
+                    Primeira metodologia que integra ambos para vantagem competitiva
+                </div>
+            </div>
+        </div>
+        <div class="metric-display">3X</div>
+        <p style="color: var(--accent); font-size: 1.5rem;">Maior valor para empresas que dominam ambos</p>
+    </div>
+
+    <!-- Slide 3: Estratégia Dupla -->
+    <div class="slide" data-slide="3">
+        <h1>🎯 Estratégia de Projeto Duplo</h1>
+        <p class="subtitle">Dois produtos sinérgicos que se potencializam</p>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-marker">1</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Framework de Liderança em IA</div>
+                    <p>Transforma CEOs tradicionais em líderes nativos em IA em 90 dias</p>
+                    <p style="color: var(--accent); margin-top: 0.5rem;">R$ 1.497 | Meta: 1000 vendas/ano</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">2</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Eco Resort Premium</div>
+                    <p>Oportunidade de investimento sustentável para líderes visionários</p>
+                    <p style="color: var(--accent); margin-top: 0.5rem;">R$ 500K-2M | Meta: 30 investidores</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">3</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Ecossistema Integrado</div>
+                    <p>Lista de IA alimenta investidores do Resort | Resort valida autoridade em IA</p>
+                    <p style="color: var(--accent); margin-top: 0.5rem;">Sinergia = 10X no valor do lead</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: O Framework -->
+    <div class="slide" data-slide="4">
+        <h1>📚 Framework Revolucionário</h1>
+        <p class="subtitle">Integrando os 3 livros mais importantes sobre IA empresarial</p>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-icon">📘</div>
+                <div class="card-title">Prediction Machines</div>
+                <div class="card-description">
+                    IA como máquina de previsão: transformando incerteza em oportunidade
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">📗</div>
+                <div class="card-title">Competing in the Age of AI</div>
+                <div class="card-description">
+                    Empresas digitais como "Fábricas de IA" - novo modelo operacional
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">📙</div>
+                <div class="card-title">Human + Machine</div>
+                <div class="card-description">
+                    Colaboração Humano-IA como vantagem competitiva definitiva
+                </div>
+            </div>
+        </div>
+        <div class="highlight-box" style="margin-top: 2rem;">
+            <p style="text-align: center; font-size: 1.2rem;">
+                <strong>+ 4DX + Deep Work =</strong><br>
+                Sistema Cognitivo de Liderança em IA
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 5: Avaliação de Prontidão -->
+    <div class="slide" data-slide="5">
+        <h1>🎯 Avaliação de Prontidão para IA + Sustentabilidade</h1>
+        <p class="subtitle">Isca digital com 25-35% de conversão esperada</p>
+        <div class="interactive-box">
+            <h2 style="color: var(--accent);">13 Perguntas Estratégicas</h2>
+            <p style="text-align: center; line-height: 1.8;">
+                Sistema de pontuação 0-130 pontos<br>
+                4 categorias de resultado personalizadas<br>
+                Segmentação automática de leads
+            </p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Visão Estratégica de IA</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Integração ESG</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Capacidade da Equipe</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Prontidão para Futuro</span>
+            </div>
+        </div>
+        <p style="color: var(--secondary); font-size: 1.5rem; margin-top: 2rem;">
+            "Descubra em 3 minutos se você vai LIDERAR ou ser LIDERADO"
+        </p>
+    </div>
+
+    <!-- Slide 6: Categorias de Resultado -->
+    <div class="slide" data-slide="6">
+        <h1>📊 Sistema de Categorização Inteligente</h1>
+        <p class="subtitle">Segmentação que maximiza conversão e qualidade</p>
+        <div class="cards-container">
+            <div class="card" style="border-color: #EF4444;">
+                <div class="card-icon">🔴</div>
+                <div class="card-title">Líder Tradicional</div>
+                <div class="card-description">
+                    0-32 pontos | Urgência máxima<br>
+                    "Alerta: Revolução dupla em curso"
+                </div>
+            </div>
+            <div class="card" style="border-color: #F59E0B;">
+                <div class="card-icon">🟡</div>
+                <div class="card-title">Adotante Progressista</div>
+                <div class="card-description">
+                    33-65 pontos | Acelerar transformação<br>
+                    "Lidere a convergência IA + ESG"
+                </div>
+            </div>
+            <div class="card" style="border-color: #10B981;">
+                <div class="card-icon">🟢</div>
+                <div class="card-title">Líder Preparado</div>
+                <div class="card-description">
+                    66-98 pontos | Otimização avançada<br>
+                    "Consolide sua liderança dupla"
+                </div>
+            </div>
+            <div class="card" style="border-color: #8B5CF6;">
+                <div class="card-icon">🏆</div>
+                <div class="card-title">Pioneiro Visionário</div>
+                <div class="card-description">
+                    99-130 pontos | Influência global<br>
+                    "Crie o futuro dos negócios"
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Cronograma 7 Dias -->
+    <div class="slide" data-slide="7">
+        <h1>⚡ Plano de Execução: 7 Dias</h1>
+        <p class="subtitle">Do zero à avaliação gerando leads qualificados</p>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-marker">D1</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Configuração Base</div>
+                    <p>Othon: Perguntas + Conteúdo | Lucas: ClickFunnels + Sistema</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">D2</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Integração & Design</div>
+                    <p>Othon: Copy final | Lucas: Automação email + Analytics</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">D3</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Testes & Otimização</div>
+                    <p>Teste ponta-a-ponta | Refinamentos | Preparação produção</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">D5</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Pré-Lançamento</div>
+                    <p>Soft launch | Primeiros leads | Otimização em tempo real</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">D7</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Lançamento Completo</div>
+                    <p>Campanhas pagas | Escala | 50-100 leads esperados</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Divisão de Responsabilidades -->
+    <div class="slide" data-slide="8">
+        <h1>🤝 Divisão Estratégica de Responsabilidades</h1>
+        <p class="subtitle">Dupla complementar perfeita</p>
+        <div class="cards-container">
+            <div class="card" style="background: linear-gradient(135deg, rgba(30, 58, 138, 0.2) 0%, rgba(30, 58, 138, 0.1) 100%);">
+                <div class="card-icon">🧠</div>
+                <div class="card-title">OTHON - Rosto & Estratégia</div>
+                <div class="card-description">
+                    • Liderança de pensamento<br>
+                    • Desenvolvimento de conteúdo<br>
+                    • Parcerias estratégicas<br>
+                    • Visão e posicionamento<br>
+                    • Autoridade e networking
+                </div>
+            </div>
+            <div class="card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%);">
+                <div class="card-icon">⚙️</div>
+                <div class="card-title">LUCAS - Sistemas & Analytics</div>
+                <div class="card-description">
+                    • Infraestrutura tecnológica<br>
+                    • Análise de dados<br>
+                    • Automação e processos<br>
+                    • Otimização de performance<br>
+                    • Escalabilidade técnica
+                </div>
+            </div>
+        </div>
+        <div class="highlight-box" style="margin-top: 2rem;">
+            <p style="text-align: center; font-size: 1.2rem;">
+                <strong>Sinergia =</strong> Visão + Execução = Dominação de Mercado
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 9: Investimento & ROI -->
+    <div class="slide" data-slide="9">
+        <h1>💰 Investimento & Retorno</h1>
+        <p class="subtitle">Números que fazem sentido</p>
+        <div class="stats-container">
+            <div class="stat-box">
+                <span class="stat-number">R$ 21K</span>
+                <span class="stat-label">Investimento Inicial</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Emails em 4 semanas</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">20.600%</span>
+                <span class="stat-label">ROI Potencial</span>
+            </div>
+        </div>
+        <div class="feature-grid" style="margin-top: 3rem;">
+            <div class="feature-item">
+                <span class="feature-icon">💻</span>
+                <span>ClickFunnels: R$ 1.200</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">📱</span>
+                <span>Marketing: R$ 8.000</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">🎨</span>
+                <span>Conteúdo: R$ 3.200</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">⚖️</span>
+                <span>Resort prep: R$ 8.000</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Métricas de Sucesso -->
+    <div class="slide" data-slide="10">
+        <h1>📈 Métricas de Sucesso</h
+ :root {
+        --primary: #1E3A8A;
+        --secondary: #10B981;
+        --accent: #F59E0B;
+        --dark: #111827;
+        --light: #F9FAFB;
+        --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: var(--dark);
+        color: var(--light);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .presentation-container {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .slide {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .slide.active {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .slide.prev {
+        transform: translateX(-100%);
+    }
+
+    /* Navigation */
+    .nav-controls {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        z-index: 100;
+    }
+
+    .nav-btn {
+        padding: 12px 24px;
+        background: var(--gradient);
+        border: none;
+        border-radius: 50px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    .nav-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: rgba(255,255,255,0.1);
+        z-index: 100;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: var(--gradient);
+        transition: width 0.6s ease;
+    }
+
+    /* Slide Indicators */
+    .slide-indicators {
+        position: fixed;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 100;
+    }
+
+    .indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.3);
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .indicator.active {
+        background: var(--accent);
+        transform: scale(1.5);
+    }
+
+    /* Typography */
+    h1 {
+        font-size: clamp(2rem, 5vw, 4rem);
+        margin-bottom: 1rem;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        animation: slideInTop 0.8s ease;
+    }
+
+    h2 {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        margin-bottom: 1rem;
+        color: var(--secondary);
+        text-align: center;
+    }
+
+    .subtitle {
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        color: rgba(255,255,255,0.8);
+        text-align: center;
+        margin-bottom: 2rem;
+        max-width: 800px;
+    }
+
+    /* Cards */
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        width: 100%;
+        max-width: 1200px;
+        margin-top: 2rem;
+    }
+
+    .card {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 20px;
+        padding: 2rem;
+        transition: all 0.3s;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--gradient);
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: -1;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        border-color: var(--accent);
+    }
+
+    .card:hover::before {
+        opacity: 0.1;
+    }
+
+    .card-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--accent);
+    }
+
+    .card-description {
+        color: rgba(255,255,255,0.7);
+        line-height: 1.6;
+    }
+
+    /* Stats */
+    .stats-container {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        max-width: 1000px;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    .stat-box {
+        text-align: center;
+        padding: 1.5rem;
+        background: rgba(255,255,255,0.05);
+        border-radius: 15px;
+        border: 1px solid rgba(255,255,255,0.1);
+        min-width: 200px;
+        transition: all 0.3s;
+    }
+
+    .stat-box:hover {
+        transform: scale(1.05);
+        background: rgba(255,255,255,0.08);
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: bold;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        color: rgba(255,255,255,0.7);
+        font-size: 1rem;
+    }
+
+    /* Timeline */
+    .timeline {
+        width: 100%;
+        max-width: 1000px;
+        margin-top: 2rem;
+    }
+
+    .timeline-item {
+        display: flex;
+        margin-bottom: 2rem;
+        position: relative;
+        padding-left: 60px;
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: 25px;
+        top: 40px;
+        bottom: -20px;
+        width: 2px;
+        background: rgba(255,255,255,0.2);
+    }
+
+    .timeline-item:last-child::before {
+        display: none;
+    }
+
+    .timeline-marker {
+        position: absolute;
+        left: 15px;
+        top: 15px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+        font-size: 0.8rem;
+    }
+
+    .timeline-content {
+        background: rgba(255,255,255,0.05);
+        border-radius: 15px;
+        padding: 1.5rem;
+        flex: 1;
+        border: 1px solid rgba(255,255,255,0.1);
+        transition: all 0.3s;
+    }
+
+    .timeline-content:hover {
+        background: rgba(255,255,255,0.08);
+        transform: translateX(10px);
+    }
+
+    .timeline-title {
+        color: var(--accent);
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Interactive Elements */
+    .interactive-box {
+        background: rgba(255,255,255,0.05);
+        border: 2px dashed rgba(255,255,255,0.3);
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 2rem 0;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .interactive-box:hover {
+        border-color: var(--accent);
+        background: rgba(255,255,255,0.08);
+    }
+
+    .pulse {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes slideInTop {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .fade-in {
+        animation: fadeIn 1s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .cards-container {
+            grid-template-columns: 1fr;
+        }
+        
+        .stats-container {
+            flex-direction: column;
+        }
+        
+        .nav-controls {
+            bottom: 20px;
+        }
+        
+        .slide-indicators {
+            right: 15px;
+        }
+    }
+
+    /* Special Elements */
+    .highlight-box {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(30, 58, 138, 0.1) 100%);
+        border: 2px solid var(--secondary);
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 2rem 0;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .cta-button {
+        padding: 1rem 3rem;
+        background: var(--gradient);
+        border: none;
+        border-radius: 50px;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 2rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 30px rgba(0,0,0,0.4);
+    }
+
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin: 2rem 0;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .feature-item {
+        background: rgba(255,255,255,0.05);
+        padding: 1rem;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .feature-icon {
+        font-size: 1.5rem;
+        color: var(--accent);
+    }
+
+    .metric-display {
+        font-size: 4rem;
+        font-weight: bold;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 2rem 0;
+    }
+
+    .projection-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 1000px;
+        margin: 2rem 0;
+    }
+
+    .projection-item {
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+        border: 1px solid var(--accent);
+        border-radius: 15px;
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .projection-period {
+        color: var(--accent);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .projection-value {
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+    }
+</style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    <!-- Slide Indicators -->
+    <div class="slide-indicators" id="indicators"></div>
+
+    <!-- Slide 1: Abertura -->
+    <div class="slide active" data-slide="1">
+        <h1 class="fade-in">🚀 Revolução Cognitiva + Transformação Sustentável</h1>
+        <p class="subtitle fade-in">A Primeira Metodologia do Mundo que Integra IA + Sustentabilidade para Liderança Empresarial</p>
+        <div class="highlight-box fade-in">
+            <h2>Oportunidade Única de Mercado</h2>
+            <p style="color: rgba(255,255,255,0.8); line-height: 1.8; text-align: center;">
+                Criando a categoria "Liderança em IA Sustentável" no Brasil
+            </p>
+        </div>
+        <div class="stats-container">
+            <div class="stat-box pulse">
+                <span class="stat-number">750K</span>
+                <span class="stat-label">Líderes Brasileiros</span>
+            </div>
+            <div class="stat-box pulse" style="animation-delay: 0.2s;">
+                <span class="stat-number">R$ 100B</span>
+                <span class="stat-label">Mercado Potencial</span>
+            </div>
+            <div class="stat-box pulse" style="animation-delay: 0.4s;">
+                <span class="stat-number">0%</span>
+                <span class="stat-label">Concorrência Direta</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: A Oportunidade -->
+    <div class="slide" data-slide="2">
+        <h1>📊 A Convergência Perfeita</h1>
+        <p class="subtitle">Dois Mercados Trilionários se Encontram</p>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <div class="card-title">Inteligência Artificial</div>
+                <div class="card-description">
+                    78% dos projetos de IA falham por falta de liderança estratégica
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🌱</div>
+                <div class="card-title">Sustentabilidade ESG</div>
+                <div class="card-description">
+                    87% dos investidores priorizam empresas com práticas sustentáveis
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💎</div>
+                <div class="card-title">Nossa Interseção</div>
+                <div class="card-description">
+                    Primeira metodologia que integra ambos para vantagem competitiva
+                </div>
+            </div>
+        </div>
+        <div class="metric-display">3X</div>
+        <p style="color: var(--accent); font-size: 1.5rem;">Maior valor para empresas que dominam ambos</p>
+    </div>
+
+    <!-- Slide 3: Estratégia Dupla -->
+    <div class="slide" data-slide="3">
+        <h1>🎯 Estratégia de Projeto Duplo</h1>
+        <p class="subtitle">Dois produtos sinérgicos que se potencializam</p>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-marker">1</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Framework de Liderança em IA</div>
+                    <p>Transforma CEOs tradicionais em líderes nativos em IA em 90 dias</p>
+                    <p style="color: var(--accent); margin-top: 0.5rem;">R$ 1.497 | Meta: 1000 vendas/ano</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">2</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Eco Resort Premium</div>
+                    <p>Oportunidade de investimento sustentável para líderes visionários</p>
+                    <p style="color: var(--accent); margin-top: 0.5rem;">R$ 500K-2M | Meta: 30 investidores</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">3</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Ecossistema Integrado</div>
+                    <p>Lista de IA alimenta investidores do Resort | Resort valida autoridade em IA</p>
+                    <p style="color: var(--accent); margin-top: 0.5rem;">Sinergia = 10X no valor do lead</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: O Framework -->
+    <div class="slide" data-slide="4">
+        <h1>📚 Framework Revolucionário</h1>
+        <p class="subtitle">Integrando os 3 livros mais importantes sobre IA empresarial</p>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-icon">📘</div>
+                <div class="card-title">Prediction Machines</div>
+                <div class="card-description">
+                    IA como máquina de previsão: transformando incerteza em oportunidade
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">📗</div>
+                <div class="card-title">Competing in the Age of AI</div>
+                <div class="card-description">
+                    Empresas digitais como "Fábricas de IA" - novo modelo operacional
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">📙</div>
+                <div class="card-title">Human + Machine</div>
+                <div class="card-description">
+                    Colaboração Humano-IA como vantagem competitiva definitiva
+                </div>
+            </div>
+        </div>
+        <div class="highlight-box" style="margin-top: 2rem;">
+            <p style="text-align: center; font-size: 1.2rem;">
+                <strong>+ 4DX + Deep Work =</strong><br>
+                Sistema Cognitivo de Liderança em IA
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 5: Avaliação de Prontidão -->
+    <div class="slide" data-slide="5">
+        <h1>🎯 Avaliação de Prontidão para IA + Sustentabilidade</h1>
+        <p class="subtitle">Isca digital com 25-35% de conversão esperada</p>
+        <div class="interactive-box">
+            <h2 style="color: var(--accent);">13 Perguntas Estratégicas</h2>
+            <p style="text-align: center; line-height: 1.8;">
+                Sistema de pontuação 0-130 pontos<br>
+                4 categorias de resultado personalizadas<br>
+                Segmentação automática de leads
+            </p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Visão Estratégica de IA</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Integração ESG</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Capacidade da Equipe</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Prontidão para Futuro</span>
+            </div>
+        </div>
+        <p style="color: var(--secondary); font-size: 1.5rem; margin-top: 2rem;">
+            "Descubra em 3 minutos se você vai LIDERAR ou ser LIDERADO"
+        </p>
+    </div>
+
+    <!-- Slide 6: Categorias de Resultado -->
+    <div class="slide" data-slide="6">
+        <h1>📊 Sistema de Categorização Inteligente</h1>
+        <p class="subtitle">Segmentação que maximiza conversão e qualidade</p>
+        <div class="cards-container">
+            <div class="card" style="border-color: #EF4444;">
+                <div class="card-icon">🔴</div>
+                <div class="card-title">Líder Tradicional</div>
+                <div class="card-description">
+                    0-32 pontos | Urgência máxima<br>
+                    "Alerta: Revolução dupla em curso"
+                </div>
+            </div>
+            <div class="card" style="border-color: #F59E0B;">
+                <div class="card-icon">🟡</div>
+                <div class="card-title">Adotante Progressista</div>
+                <div class="card-description">
+                    33-65 pontos | Acelerar transformação<br>
+                    "Lidere a convergência IA + ESG"
+                </div>
+            </div>
+            <div class="card" style="border-color: #10B981;">
+                <div class="card-icon">🟢</div>
+                <div class="card-title">Líder Preparado</div>
+                <div class="card-description">
+                    66-98 pontos | Otimização avançada<br>
+                    "Consolide sua liderança dupla"
+                </div>
+            </div>
+            <div class="card" style="border-color: #8B5CF6;">
+                <div class="card-icon">🏆</div>
+                <div class="card-title">Pioneiro Visionário</div>
+                <div class="card-description">
+                    99-130 pontos | Influência global<br>
+                    "Crie o futuro dos negócios"
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Cronograma 7 Dias -->
+    <div class="slide" data-slide="7">
+        <h1>⚡ Plano de Execução: 7 Dias</h1>
+        <p class="subtitle">Do zero à avaliação gerando leads qualificados</p>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-marker">D1</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Configuração Base</div>
+                    <p>Othon: Perguntas + Conteúdo | Lucas: ClickFunnels + Sistema</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">D2</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Integração & Design</div>
+                    <p>Othon: Copy final | Lucas: Automação email + Analytics</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">D3</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Testes & Otimização</div>
+                    <p>Teste ponta-a-ponta | Refinamentos | Preparação produção</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">D5</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Pré-Lançamento</div>
+                    <p>Soft launch | Primeiros leads | Otimização em tempo real</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">D7</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">Lançamento Completo</div>
+                    <p>Campanhas pagas | Escala | 50-100 leads esperados</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Divisão de Responsabilidades -->
+    <div class="slide" data-slide="8">
+        <h1>🤝 Divisão Estratégica de Responsabilidades</h1>
+        <p class="subtitle">Dupla complementar perfeita</p>
+        <div class="cards-container">
+            <div class="card" style="background: linear-gradient(135deg, rgba(30, 58, 138, 0.2) 0%, rgba(30, 58, 138, 0.1) 100%);">
+                <div class="card-icon">🧠</div>
+                <div class="card-title">OTHON - Rosto & Estratégia</div>
+                <div class="card-description">
+                    • Liderança de pensamento<br>
+                    • Desenvolvimento de conteúdo<br>
+                    • Parcerias estratégicas<br>
+                    • Visão e posicionamento<br>
+                    • Autoridade e networking
+                </div>
+            </div>
+            <div class="card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%);">
+                <div class="card-icon">⚙️</div>
+                <div class="card-title">LUCAS - Sistemas & Analytics</div>
+                <div class="card-description">
+                    • Infraestrutura tecnológica<br>
+                    • Análise de dados<br>
+                    • Automação e processos<br>
+                    • Otimização de performance<br>
+                    • Escalabilidade técnica
+                </div>
+            </div>
+        </div>
+        <div class="highlight-box" style="margin-top: 2rem;">
+            <p style="text-align: center; font-size: 1.2rem;">
+                <strong>Sinergia =</strong> Visão + Execução = Dominação de Mercado
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 9: Investimento & ROI -->
+    <div class="slide" data-slide="9">
+        <h1>💰 Investimento & Retorno</h1>
+        <p class="subtitle">Números que fazem sentido</p>
+        <div class="stats-container">
+            <div class="stat-box">
+                <span class="stat-number">R$ 21K</span>
+                <span class="stat-label">Investimento Inicial</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Emails em 4 semanas</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">20.600%</span>
+                <span class="stat-label">ROI Potencial</span>
+            </div>
+        </div>
+        <div class="feature-grid" style="margin-top: 3rem;">
+            <div class="feature-item">
+                <span class="feature-icon">💻</span>
+                <span>ClickFunnels: R$ 1.200</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">📱</span>
+                <span>Marketing: R$ 8.000</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">🎨</span>
+                <span>Conteúdo: R$ 3.200</span>
+            </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⚖️</span>
+                    <span>Resort prep: R$ 8.000</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Métricas de Sucesso -->
+        <div class="slide" data-slide="10">
+            <h1>📈 Métricas de Sucesso</h1>
+            <p class="subtitle">KPIs que realmente importam</p>
+            <div class="projection-grid">
+                <div class="projection-item">
+                    <div class="projection-period">Semana 1</div>
+                    <div class="projection-value">25</div>
+                    <div class="stat-label">Emails capturados</div>
+                </div>
+                <div class="projection-item">
+                    <div class="projection-period">Semana 2</div>
+                    <div class="projection-value">75</div>
+                    <div class="stat-label">Emails capturados</div>
+                </div>
+                <div class="projection-item">
+                    <div class="projection-period">Semana 3</div>
+                    <div class="projection-value">150</div>
+                    <div class="stat-label">Emails capturados</div>
+                </div>
+                <div class="projection-item">
+                    <div class="projection-period">Semana 4</div>
+                    <div class="projection-value">250+</div>
+                    <div class="stat-label">Emails capturados</div>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Metas de Conversão</h2>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                    <div>• Taxa de conclusão: 25%+</div>
+                    <div>• Conversão landing: 15-25%</div>
+                    <div>• Qualidade do lead: Score 7+</div>
+                    <div>• Engajamento email: 40%+</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Projeções Financeiras -->
+        <div class="slide" data-slide="11">
+            <h1>💎 Projeções Financeiras Integradas</h1>
+            <p class="subtitle">Cenários conservador e otimista</p>
+            <div class="cards-container">
+                <div class="card" style="border-color: var(--secondary);">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">Cenário Conservador</div>
+                    <div class="card-description">
+                        <strong>Framework IA:</strong><br>
+                        300 vendas × R$ 1.497 = R$ 449K<br><br>
+                        <strong>Eco Resort:</strong><br>
+                        10 investidores × R$ 500K = R$ 5M<br><br>
+                        <strong style="color: var(--accent);">Total: R$ 5.449.000</strong>
+                    </div>
+                </div>
+                <div class="card" style="border-color: var(--accent);">
+                    <div class="card-icon">🚀</div>
+                    <div class="card-title">Cenário Otimista</div>
+                    <div class="card-description">
+                        <strong>Framework IA:</strong><br>
+                        1000 vendas × R$ 1.497 = R$ 1.497.000<br><br>
+                        <strong>Eco Resort:</strong><br>
+                        30 investidores × R$ 750K = R$ 22.5M<br><br>
+                        <strong style="color: var(--accent);">Total: R$ 23.997.000</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="metric-display">R$ 24M</div>
+            <p style="color: var(--secondary); font-size: 1.2rem;">Potencial em 12 meses com estratégia integrada</p>
+        </div>
+
+        <!-- Slide 12: Call to Action Final -->
+        <div class="slide" data-slide="12">
+            <h1>🌟 Prontos para Fazer História?</h1>
+            <p class="subtitle">Criando a primeira "Avaliação de Liderança em IA Sustentável" do mundo</p>
+            <div class="highlight-box">
+                <h2 style="font-size: 1.8rem;">Vantagens Competitivas Únicas</h2>
+                <div style="line-height: 2; font-size: 1.1rem;">
+                    ✅ Zero concorrência na interseção IA + Sustentabilidade<br>
+                    ✅ Posicionamento de mercado impossível de copiar<br>
+                    ✅ Ponte natural entre Framework e Resort<br>
+                    ✅ Autoridade dupla em temas críticos<br>
+                    ✅ Criação de categoria própria
+                </div>
+            </div>
+            <div class="stats-container" style="margin-top: 2rem;">
+                <div class="stat-box pulse">
+                    <span class="stat-number">7</span>
+                    <span class="stat-label">Dias para lançar</span>
+                </div>
+                <div class="stat-box pulse" style="animation-delay: 0.2s;">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Leads em 30 dias</span>
+                </div>
+                <div class="stat-box pulse" style="animation-delay: 0.4s;">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">Potencial de impacto</span>
+                </div>
+            </div>
+            <button class="cta-button">VAMOS DOMINAR ESTE MERCADO! 🚀</button>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="nav-controls">
+            <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Próximo →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 12;
+
+        // Initialize indicators
+        function initIndicators() {
+            const indicatorsContainer = document.getElementById('indicators');
+            for (let i = 1; i <= totalSlides; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                if (i === 1) indicator.classList.add('active');
+                indicator.onclick = () => goToSlide(i);
+                indicatorsContainer.appendChild(indicator);
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        // Update indicators
+        function updateIndicators() {
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((indicator, index) => {
+                if (index === currentSlide - 1) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        // Change slide function
+        function changeSlide(direction) {
+            const slides = document.querySelectorAll('.slide');
+            
+            // Hide current slide
+            slides[currentSlide - 1].classList.remove('active');
+            
+            // Update slide number
+            currentSlide += direction;
+            
+            // Boundary checks
+            if (currentSlide < 1) currentSlide = 1;
+            if (currentSlide > totalSlides) currentSlide = totalSlides;
+            
+            // Show new slide
+            slides[currentSlide - 1].classList.add('active');
+            
+            // Update UI elements
+            updateProgress();
+            updateIndicators();
+            updateNavButtons();
+        }
+
+        // Go to specific slide
+        function goToSlide(slideNumber) {
+            const slides = document.querySelectorAll('.slide');
+            
+            // Hide current slide
+            slides[currentSlide - 1].classList.remove('active');
+            
+            // Update slide number
+            currentSlide = slideNumber;
+            
+            // Show new slide
+            slides[currentSlide - 1].classList.add('active');
+            
+            // Update UI elements
+            updateProgress();
+            updateIndicators();
+            updateNavButtons();
+        }
+
+        // Update navigation buttons
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentSlide === 1;
+            nextBtn.disabled = currentSlide === totalSlides;
+            
+            if (currentSlide === totalSlides) {
+                nextBtn.textContent = 'Finalizar';
+            } else {
+                nextBtn.textContent = 'Próximo →';
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key === 'Escape') {
+                // Optional: Add fullscreen toggle
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                changeSlide(1); // Swipe left, go next
+            }
+            if (touchEndX > touchStartX + 50) {
+                changeSlide(-1); // Swipe right, go previous
+            }
+        }
+
+        // Animate numbers on slide change
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const finalValue = num.textContent;
+                if (!isNaN(finalValue.replace(/[^\d]/g, ''))) {
+                    let currentValue = 0;
+                    const increment = parseInt(finalValue.replace(/[^\d]/g, '')) / 30;
+                    const timer = setInterval(() => {
+                        currentValue += increment;
+                        if (currentValue >= parseInt(finalValue.replace(/[^\d]/g, ''))) {
+                            num.textContent = finalValue;
+                            clearInterval(timer);
+                        } else {
+                            num.textContent = Math.floor(currentValue);
+                        }
+                    }, 50);
+                }
+            });
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            initIndicators();
+            updateProgress();
+            updateNavButtons();
+            
+            // Add smooth transitions
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+            });
+        });
+
+        // Optional: Fullscreen mode
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Add fullscreen button (optional)
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.innerHTML = '⛶';
+        fullscreenBtn.style.cssText = 'position: fixed; top: 20px; right: 20px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 10px 15px; border-radius: 10px; cursor: pointer; z-index: 1000; font-size: 1.5rem;';
+        fullscreenBtn.onclick = toggleFullscreen;
+        document.body.appendChild(fullscreenBtn);
+
+        // Auto-advance timer (optional - commented out by default)
+        // let autoAdvance = setInterval(() => {
+        //     if (currentSlide < totalSlides) {
+        //         changeSlide(1);
+        //     } else {
+        //         clearInterval(autoAdvance);
+        //     }
+        // }, 10000); // Advance every 10 seconds
+
+        // Pause auto-advance on user interaction
+        // document.addEventListener('click', () => {
+        //     clearInterval(autoAdvance);
+        // });
+    </script>
+</body>
+</html>
